@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PracticalTest02Var05</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="server">SERVER</string>
+    <string name="client">CLIENT</string>
+    <string name="server_port">Server port</string>
+    <string name="client_port">Port</string>
+    <string name="connect">Connect</string>
+    <string name="comanda">Comanda</string>
+    <string name="client_address">IP Server</string>
+    <string name="trimite_comanda">Trimite comanda</string>
+    <string name="rezultat_comanda">Rezultat comanda</string>
+   
+
+</resources>
