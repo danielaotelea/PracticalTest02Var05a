@@ -101,19 +101,10 @@ public class PracticalTest02Var05MainActivity extends Activity {
 			String [] parseComm = comandaGet.split(",");
 			Toast.makeText(
 					getApplicationContext(),
-					adresaIp + " " +  port + parseComm[0] + " >> " + parseComm[1] + " val " + parseComm[2],
+					adresaIp + " " +  port + parseComm[0] + " >> " + parseComm[1] + " val ",
 					Toast.LENGTH_SHORT
 				).show();
-			
-			if(parseComm.length != 3)
-			{
-				Toast.makeText(
-						getApplicationContext(),
-						adresaIp + " " +  port + "pb",
-						Toast.LENGTH_SHORT
-					).show();
-				return;
-			}
+	
 			
 			clientThread = new ClientThread(
 					adresaIp,

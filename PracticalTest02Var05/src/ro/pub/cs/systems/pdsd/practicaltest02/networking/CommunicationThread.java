@@ -39,23 +39,19 @@ public class CommunicationThread extends Thread {
 				if (bufferedReader != null && printWriter != null) {
 				
 					String comanda            = bufferedReader.readLine();
-					
+					Log.i(Constants.TAG, "Command is " + comanda);
 					ValueInfo val;
 					String [] parseComm = comanda.split(",");
 					if(parseComm[0].equals("put"))
 					{
-						/*try {
+						Log.i(Constants.TAG, "Command is put " + comanda);
+						try {
 							  HttpClient httpClient = new DefaultHttpClient();
 							  HttpGet httpGet = new HttpGet("http://www.timeapi.org/utc/now");
 							  
 							  ResponseHandler<String> responseHandler = new BasicResponseHandler();
 							  String content = httpClient.execute(httpGet, responseHandler);
 							  
-							  //content
-							  if(content != null && !content.isEmpty())
-							  {
-								  
-							  }
 							  
 							} catch (Exception exception) {
 							  Log.e(Constants.TAG, exception.getMessage());
@@ -63,33 +59,36 @@ public class CommunicationThread extends Thread {
 							    exception.printStackTrace();
 							  }
 							}
-						*/
-						
+						Log.i(Constants.TAG, "Putting data in server thread" + parseComm[1] + "*" + parseComm[2]);
 						 serverThread.setData(parseComm[1], new ValueInfo(parseComm[2],(long)5));
 						 result = "OK";
 						
-					} else //get
+					} else if(parseComm[0].equals("get"))
 					{
 						//get
+						Log.i(Constants.TAG, "Command is get " + comanda);
 						 HashMap<String, ValueInfo> data = serverThread.getData();
+						 String content = "";
 						 if(data.containsKey(parseComm[1]))
 						 {
-							 
+							 Log.i(Constants.TAG, "hashmap contains key ");
 							 long actTime = 0;
 							 ValueInfo exist = data.get(parseComm[1]);
-							 /*
+							 
 							 	try {
 									  HttpClient httpClient = new DefaultHttpClient();
 									  HttpGet httpGet = new HttpGet("http://www.timeapi.org/utc/now");
 									  
 									  ResponseHandler<String> responseHandler = new BasicResponseHandler();
-									  String content = httpClient.execute(httpGet, responseHandler);
+									   content = httpClient.execute(httpGet, responseHandler);
 									  
 									  //content
 									  if(content != null && !content.isEmpty())
 									  {
-										  if(exist.getTimeS() - actTime < 60)
+										  Log.i(Constants.TAG, "content " + content);
+										  /*if(actTime - exist.getTimeS() < 60)
 												 result = exist.getValue();
+										  */
 									  }
 									  
 									} catch (Exception exception) {
@@ -98,21 +97,29 @@ public class CommunicationThread extends Thread {
 									    exception.printStackTrace();
 									  }
 									}
-							 	*/
-							 
-							 if(exist.getTimeS() - actTime < 60)
-								 result = exist.getValue();
+							 	
+							 	Log.i(Constants.TAG, "actTime " + actTime + "exist.getTimeS()" + exist.getTimeS());
+							 if(exist.getTimeS() - actTime < 60) {
+								 Log.i(Constants.TAG, "result is " + comanda);
+								 if(content != null && !content.isEmpty())
+								  {
+									 result = exist.getValue() + " TimeStamp: " + content;
+								  } else
+								  {
+									  result = exist.getValue();
+								  }
+							 }
 							 
 						 } else
 						 {
+							 Log.i(Constants.TAG, "result is none ");
 							  result = "NONE"; 
 						 }
-					}
+					} else
 					
+					Log.i(Constants.TAG, "sending to server " + result);
 					printWriter.println(result);
 					printWriter.flush();
-						
-				//socket.close();
 			}
 		} catch (Exception ioException) 
 			{

@@ -27,7 +27,7 @@ public class ClientThread extends Thread {
 			TextView rezultat_comandaEditText) {
 		this.address                 = address;
 		this.port                    = port;
-		this.comanda                    = comanda;
+		this.comanda                    = parseComm;
 		this.rezultat_comandaEditText = rezultat_comandaEditText;
 	}
 	
@@ -46,17 +46,16 @@ public class ClientThread extends Thread {
 				printWriter.println(comanda);
 				printWriter.flush();
 			
-				String getRezultat;
-				while ((getRezultat = bufferedReader.readLine()) != null) {
+				String getRezultat = bufferedReader.readLine();
 					final String info = getRezultat;
 					rezultat_comandaEditText.post(new Runnable() {
 						@Override
 						public void run() {
-							rezultat_comandaEditText.setText("daniela " + info + "\n");
+							rezultat_comandaEditText.setText(info + "\n");
 						}
 					});
-				}
-				
+				socket.close();
+				Log.e(Constants.TAG,"socket close");
 			} else {
 				Log.e(Constants.TAG, "[CLIENT THREAD] BufferedReader / PrintWriter are null!");
 			}
